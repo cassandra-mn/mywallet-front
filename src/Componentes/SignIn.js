@@ -1,13 +1,35 @@
+import {useNavigate} from 'react-router-dom';
+import {useState} from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 export default function SignIn() {
+    const navigate = useNavigate();
+    const [date, setDate] = useState({
+        email: '',
+        password: ''
+    });
+
+    async function login() {
+        try {
+            await axios.post('http://localhost:5000/sign-in', date);
+            alert('Sucesso no login');
+            //navigate('/transactions');
+        } catch(e) {
+            alert(e.response.data);
+        }
+    }
+
     return (
         <Container>
             <Logo>MyWallet</Logo>
-            <Input placeholder='E-mail'/>
-            <Input placeholder='Senha'/>
-            <Button>Entrar</Button>
-            <Register>Primeira vez? Cadastre-se!</Register>
+
+            <Input placeholder='E-mail' value={date.email} onChange={e => setDate({...date, email: e.target.value})}/>
+            <Input placeholder='Senha' type='password' value={date.password} onChange={e => setDate({...date, password: e.target.value})}/>
+
+            <Button onClick={login}>Entrar</Button>
+
+            <Register onClick={() => navigate('/sign-up')}>Primeira vez? Cadastre-se!</Register>
         </Container>
     );
 }
@@ -33,10 +55,12 @@ const Input = styled.input`
     width: 326px;
     height: 58px;
     padding: 15px;
+    font-size: 20px;
     margin-bottom: 13px;
     border-radius: 5px;
     border: none;
     background: #FFFFFF;
+    font-family: 'Raleway';
     box-sizing: border-box;
 
     ::placeholder {

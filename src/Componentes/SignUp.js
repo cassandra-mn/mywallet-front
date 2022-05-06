@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function SignUp() {
     const navigate = useNavigate();
-    const [dados, setDados] = useState({
+    const [date, setDate] = useState({
         name: '',
         email: '',
         password: '',
@@ -14,7 +14,7 @@ export default function SignUp() {
 
     async function register() {
         try {
-            await axios.post('http://localhost:5000/sign-up', dados);
+            await axios.post('http://localhost:5000/sign-up', date);
             alert('Cadastro realizado com sucesso!');
             navigate('/sign-in');
         } catch(e) {
@@ -27,10 +27,10 @@ export default function SignUp() {
         <Container>
             <Logo>MyWallet</Logo>
 
-            <Input placeholder='Nome' value={dados.name} onChange={e => setDados({...dados, name: e.target.value})}/>
-            <Input placeholder='E-mail' value={dados.email} onChange={e => setDados({...dados, email: e.target.value})}/>
-            <Input placeholder='Senha' type='password' value={dados.password} onChange={e => setDados({...dados, password: e.target.value})}/>
-            <Input placeholder='Confirme a senha' type='password' value={dados.passwordConfirm} onChange={e => setDados({...dados, passwordConfirm: e.target.value})}/>
+            <Input placeholder='Nome' value={date.name} onChange={e => setDate({...date, name: e.target.value})}/>
+            <Input placeholder='E-mail' value={date.email} onChange={e => setDate({...date, email: e.target.value})}/>
+            <Input placeholder='Senha' type='password' value={date.password} onChange={e => setDate({...date, password: e.target.value})}/>
+            <Input placeholder='Confirme a senha' type='password' value={date.passwordConfirm} onChange={e => setDate({...date, passwordConfirm: e.target.value})}/>
             
             <Button onClick={register}>Cadastrar</Button>
             
