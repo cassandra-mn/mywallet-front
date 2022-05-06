@@ -45,7 +45,6 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #945CBE;
 `;
 
 const Logo = styled.h1`
@@ -65,7 +64,6 @@ const Input = styled.input`
     border-radius: 5px;
     border: none;
     background: #FFFFFF;
-    box-sizing: border-box;
     font-family: 'Raleway';
 
     ::placeholder {
@@ -88,7 +86,6 @@ const Button = styled.button`
     color: #FFFFFF;
     background: #A328D6;
     font-family: 'Raleway';
-    box-sizing: border-box;
     
     :hover {
         cursor: pointer;

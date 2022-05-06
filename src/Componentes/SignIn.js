@@ -14,7 +14,7 @@ export default function SignIn() {
         try {
             await axios.post('http://localhost:5000/sign-in', date);
             alert('Sucesso no login');
-            //navigate('/transactions');
+            navigate('/transactions');
         } catch(e) {
             alert(e.response.data);
         }
@@ -40,7 +40,6 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #945CBE;
 `;
 
 const Logo = styled.h1`
@@ -61,7 +60,6 @@ const Input = styled.input`
     border: none;
     background: #FFFFFF;
     font-family: 'Raleway';
-    box-sizing: border-box;
 
     ::placeholder {
         font-size: 20px;
@@ -83,7 +81,6 @@ const Button = styled.button`
     color: #FFFFFF;
     background: #A328D6;
     font-family: 'Raleway';
-    box-sizing: border-box;
     
     :hover {
         cursor: pointer;
