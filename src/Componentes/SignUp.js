@@ -1,8 +1,10 @@
+import {useNavigate} from 'react-router-dom';
+import {useState} from 'react';
 import styled from 'styled-components';
-import { useState } from 'react';
 import axios from 'axios';
 
 export default function SignUp() {
+    const navigate = useNavigate();
     const [dados, setDados] = useState({
         name: '',
         email: '',
@@ -14,6 +16,7 @@ export default function SignUp() {
         try {
             await axios.post('http://localhost:5000/sign-up', dados);
             alert('Cadastro realizado com sucesso!');
+            navigate('/sign-in');
         } catch(e) {
             alert('Erro ao cadastrar');
             alert(e.response.data);
@@ -31,7 +34,7 @@ export default function SignUp() {
             
             <Button onClick={register}>Cadastrar</Button>
             
-            <Login>Já tem uma conta? Entre agora?</Login>
+            <Login onClick={() => navigate('/sign-in')}>Já tem uma conta? Entre agora?</Login>
         </Container>
     );
 }
