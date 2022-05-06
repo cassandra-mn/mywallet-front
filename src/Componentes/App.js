@@ -1,10 +1,11 @@
-import Login from './Login';
-import Register from './Register';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 
 export default function App() {
     return (
         <>
-            <Login />
+            <SignUp />
         </>
     );
 }
+//<SignIn />

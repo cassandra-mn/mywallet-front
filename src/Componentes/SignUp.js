@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
-export default function Login() {
+export default function SignUp() {
     return (
         <Container>
             <Logo>MyWallet</Logo>
+            <Input placeholder='Nome'/>
             <Input placeholder='E-mail'/>
             <Input placeholder='Senha'/>
-            <Button>Entrar</Button>
-            <Register>Primeira vez? Cadastre-se!</Register>
+            <Input placeholder='Confirme a senha'/>
+            <Button>Cadastrar</Button>
+            <Login>Já tem uma conta? Entre agora?</Login>
         </Container>
     );
 }
@@ -66,11 +68,15 @@ const Button = styled.button`
     }
 `;
 
-const Register = styled.p`
+const Login = styled.p`
     font-weight: 700;
     font-size: 15px;
     line-height: 18px;
     margin-top: 36px;
     color: #FFFFFF;
     font-family: 'Raleway';
+
+    :hover {
+        cursor: pointer;
+    }
 `;
