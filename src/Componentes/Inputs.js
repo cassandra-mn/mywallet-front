@@ -16,7 +16,7 @@ export default function Outputs() {
 
     async function save() {
         try {
-            await axios.post('http://localhost:5000/transactions/inputs', data, {
+            await axios.post('http://localhost:5000/transactions/input', data, {
                 headers: {Authorization: `Bearer ${user.token}`}
             });
             alert('Entrada adicionada');

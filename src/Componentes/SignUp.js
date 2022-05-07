@@ -16,7 +16,7 @@ export default function SignUp() {
         try {
             await axios.post('http://localhost:5000/sign-up', date);
             alert('Cadastro realizado com sucesso!');
-            navigate('/sign-in');
+            navigate('/');
         } catch(e) {
             alert('Erro ao cadastrar');
             alert(e.response.data);
@@ -34,7 +34,7 @@ export default function SignUp() {
             
             <Button onClick={register}>Cadastrar</Button>
             
-            <Login onClick={() => navigate('/sign-in')}>Já tem uma conta? Entre agora?</Login>
+            <Login onClick={() => navigate('/')}>Já tem uma conta? Entre agora?</Login>
         </Container>
     );
 }

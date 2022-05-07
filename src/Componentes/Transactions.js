@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
 import {FaSignOutAlt} from 'react-icons/fa';
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -10,11 +10,25 @@ export default function Transactions() {
     const navigate = useNavigate();
     const {user} = useContext(UserContext);
 
+    useEffect(() => {
+        (async () => {
+            try {
+                const transactions = await axios.get('http://localhost:5000/transactions', {
+                    headers: {Authorization: `Bearer ${user.token}`}
+                });
+                console.log(transactions);
+            } catch(e) {
+                alert('Erro ao obter transações');
+                console.log(e);
+            }
+        })();
+    }, []);
+
     return (
         <Container>
             <Nav>
                 <H1>Olá, {user.name}</H1>
-                <Exit><FaSignOutAlt/></Exit> 
+                <Exit onClick={() => navigate('/')}><FaSignOutAlt/></Exit> 
             </Nav>
             
             <Registers>
@@ -22,11 +36,11 @@ export default function Transactions() {
             </Registers>
 
             <Footer>
-                <Transaction onClick={() => navigate('/transactions/inputs')}>
+                <Transaction onClick={() => navigate('/transactions/input')}>
                     <Icon>+</Icon>
                     <P>Nova entrada</P>
                 </Transaction>
-                <Transaction onClick={() => navigate('/transactions/outputs')}>
+                <Transaction onClick={() => navigate('/transactions/output')}>
                     <Icon>-</Icon>
                     <P>Nova saída</P>
                 </Transaction>
