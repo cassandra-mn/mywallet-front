@@ -1,13 +1,19 @@
 import {useNavigate} from 'react-router-dom';
 import {FaSignOutAlt} from 'react-icons/fa';
+import {useContext} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import UserContext from './../context/UserContext';
+
 export default function Transactions() {
+    const navigate = useNavigate();
+    const {user} = useContext(UserContext);
+
     return (
         <Container>
             <Nav>
-                <H1>Olá</H1>
+                <H1>Olá, {user.name}</H1>
                 <Exit><FaSignOutAlt/></Exit> 
             </Nav>
             
@@ -16,11 +22,11 @@ export default function Transactions() {
             </Registers>
 
             <Footer>
-                <Transaction>
+                <Transaction onClick={() => navigate('/transactions/inputs')}>
                     <Icon>+</Icon>
                     <P>Nova entrada</P>
                 </Transaction>
-                <Transaction>
+                <Transaction onClick={() => navigate('/transactions/outputs')}>
                     <Icon>-</Icon>
                     <P>Nova saída</P>
                 </Transaction>

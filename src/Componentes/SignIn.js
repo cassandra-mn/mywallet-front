@@ -1,10 +1,13 @@
 import {useNavigate} from 'react-router-dom';
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import UserContext from './../context/UserContext';
+
 export default function SignIn() {
     const navigate = useNavigate();
+    const {setUser} = useContext(UserContext);
     const [data, setdata] = useState({
         email: '',
         password: ''
@@ -12,8 +15,8 @@ export default function SignIn() {
 
     async function login() {
         try {
-            await axios.post('http://localhost:5000/sign-in', data);
-            alert('Sucesso no login');
+            const response = await axios.post('http://localhost:5000/sign-in', data);
+            setUser(response.data);
             navigate('/transactions');
         } catch(e) {
             alert(e.response.data);

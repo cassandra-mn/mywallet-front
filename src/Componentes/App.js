@@ -1,13 +1,18 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {useState} from 'react';
 
 import SignIn from './SignIn';
 import SignUp from './SignUp';
-import Transactions from './Transactions';
 import Inputs from './Inputs';
 import Outputs from './Outputs';
+import Transactions from './Transactions';
+import UserContext from './../context/UserContext';
 
 export default function App() {
+    const [user, setUser] = useState();
+
     return (
+        <UserContext.Provider value={{user, setUser}}>
         <BrowserRouter>
             <Routes>
                 <Route path='/sign-in' element={<SignIn/>}/>
@@ -18,5 +23,6 @@ export default function App() {
                 <Route />
             </Routes>
         </BrowserRouter>
+        </UserContext.Provider>
     );
 }
