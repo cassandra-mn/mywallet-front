@@ -5,14 +5,14 @@ import axios from 'axios';
 
 export default function SignIn() {
     const navigate = useNavigate();
-    const [date, setDate] = useState({
+    const [data, setdata] = useState({
         email: '',
         password: ''
     });
 
     async function login() {
         try {
-            await axios.post('http://localhost:5000/sign-in', date);
+            await axios.post('http://localhost:5000/sign-in', data);
             alert('Sucesso no login');
             navigate('/transactions');
         } catch(e) {
@@ -24,8 +24,8 @@ export default function SignIn() {
         <Container>
             <Logo>MyWallet</Logo>
 
-            <Input placeholder='E-mail' value={date.email} onChange={e => setDate({...date, email: e.target.value})}/>
-            <Input placeholder='Senha' type='password' value={date.password} onChange={e => setDate({...date, password: e.target.value})}/>
+            <Input placeholder='E-mail' value={data.email} onChange={e => setdata({...data, email: e.target.value})}/>
+            <Input placeholder='Senha' type='password' value={data.password} onChange={e => setdata({...data, password: e.target.value})}/>
 
             <Button onClick={login}>Entrar</Button>
 
