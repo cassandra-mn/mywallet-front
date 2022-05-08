@@ -8,9 +8,10 @@ import axios from 'axios';
 import UserContext from './../context/UserContext';
 
 export default function Transactions() {
-    const [transactions, setTransactions] = useState();
     const navigate = useNavigate();
     const {user} = useContext(UserContext);
+    const [transactions, setTransactions] = useState();
+    let sum = 0;
 
     useEffect(() => {
         (async () => {
@@ -25,7 +26,6 @@ export default function Transactions() {
             }
         })();
     }, []);
-    console.log(transactions);
 
     return transactions ? (
         <Container>
@@ -40,7 +40,7 @@ export default function Transactions() {
                             {transactions.map(transaction => {
                                 const {date, description, value, type} = transaction;
                                 const number = parseFloat(value).toFixed(2).replace('.', ',');
-                                console.log(type);
+                                type === 'input' ? sum += parseFloat(value) : sum -= parseFloat(value);
 
                                 return (
                                     <List>
@@ -54,7 +54,7 @@ export default function Transactions() {
                             })}
                             <Saldo>
                                 SALDO
-                                <Value color={'#03AC00'}>{parseFloat(15).toFixed(2).replace('.', ',')}</Value> 
+                                <Value color={sum > 0 ? '#03AC00' : '#C70000'}>{parseFloat(sum).toFixed(2).replace('.', ',')}</Value> 
                             </Saldo>
                         </Values>
                    ) : (
@@ -140,8 +140,8 @@ const Footer = styled.div`
 `;
 
 const Transaction = styled.div`
-    min-width: 155px;
-    min-height: 114px;
+    min-width: 48%;
+    height: 114px;
     border-radius: 5px;
     padding: 15px;
     display: flex;
@@ -179,6 +179,8 @@ const P = styled.div`
 
 const Values = styled.div`
     width: 100%;
+    height: calc(100vh - 280px);
+    overflow-y: scroll;
     padding: 12px;
     display: flex;
     flex-direction: column;
