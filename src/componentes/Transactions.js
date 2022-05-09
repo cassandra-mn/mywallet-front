@@ -6,7 +6,7 @@ import {useState} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import UserContext from './../context/UserContext';
+import UserContext from '../context/UserContext';
 
 export default function Transactions() {
     const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function Transactions() {
     }, []);
 
     async function getData() {
-        const transactions = await axios.get('http://localhost:5000/transactions', {
+        const transactions = await axios.get('https://projeto-my-wallet.herokuapp.com/transactions', {
             headers: {Authorization: `Bearer ${user.token}`}
         });
         setTransactions(transactions.data);
@@ -36,7 +36,7 @@ export default function Transactions() {
         try {
             const confirm = window.confirm('Tem certeza que deseja apagar essa transação?');
             if (confirm) {
-                await axios.delete(`http://localhost:5000/transactions/${transaction._id}`, {
+                await axios.delete(`https://projeto-my-wallet.herokuapp.com/transactions/${transaction._id}`, {
                     headers: {Authorization: `Bearer ${user.token}`}
                 });
                 getData();

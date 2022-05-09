@@ -1,25 +1,25 @@
-import {useNavigate} from 'react-router-dom';
-import {useContext} from 'react';
-import {useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {useState, useContext} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import UserContext from './../context/UserContext';
+import UserContext from '../context/UserContext';
 
 export default function Outputs() {
     const navigate = useNavigate();
     const {user} = useContext(UserContext);
+    const {id} = useParams();
     const [data, setData] = useState({
         value: '',
         description: ''
     });
-    
-    async function save() {
+
+    async function update() {
         try {
-            await axios.post('http://localhost:5000/transactions/output', data, {
+            await axios.put(`https://projeto-my-wallet.herokuapp.com/transactions/${id}`, data, {
                 headers: {Authorization: `Bearer ${user.token}`}
             });
-            alert('Saída adicionada');
+            alert('Entrada atualizada');
             navigate('/transactions');
         } catch(e) {
             alert(e.response.data);
@@ -28,12 +28,12 @@ export default function Outputs() {
 
     return (
         <Container>
-            <H1>Nova saída</H1>
+            <H1>Editar entrada</H1>
 
             <Input placeholder='Valor' value={data.value} onChange={e => setData({...data, value: e.target.value})}/>
             <Input placeholder='Descrição' value={data.description} onChange={e => setData({...data, description: e.target.value})}/>
 
-            <Button onClick={save}>Salvar saída</Button>
+            <Button onClick={update}>Atualizar Entrada</Button>
         </Container>
     );
 }

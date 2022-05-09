@@ -14,7 +14,7 @@ export default function SignUp() {
 
     async function register() {
         try {
-            await axios.post('http://localhost:5000/sign-up', date);
+            await axios.post('https://projeto-my-wallet.herokuapp.com/sign-up', date);
             alert('Cadastro realizado com sucesso!');
             navigate('/');
         } catch(e) {

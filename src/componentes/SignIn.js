@@ -3,7 +3,7 @@ import {useState, useContext} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import UserContext from './../context/UserContext';
+import UserContext from '../context/UserContext';
 
 export default function SignIn() {
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function SignIn() {
 
     async function login() {
         try {
-            const response = await axios.post('http://localhost:5000/sign-in', data);
+            const response = await axios.post('https://projeto-my-wallet.herokuapp.com/sign-in', data);
             setUser(response.data);
             navigate('/transactions');
         } catch(e) {
