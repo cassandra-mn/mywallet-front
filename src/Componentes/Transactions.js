@@ -28,6 +28,20 @@ export default function Transactions() {
         })();
     }, []);
 
+    async function exclude(transaction) {
+        console.log('Deletando ', transaction._id);
+        
+        try {
+            const confirm = window.confirm('Tem certeza que deseja apagar essa transação?');
+            return confirm ? (
+                await axios.delete(`http://localhost:5000/transactions/${transaction._id}`, {
+                headers: {Authorization: `Bearer ${user.token}`}
+            })) : '';
+        } catch(e) {
+            alert(e.response.data);
+        }
+    }
+
     return transactions ? (
         <Container>
             <Nav>
@@ -36,31 +50,34 @@ export default function Transactions() {
             </Nav>
             
             <Registers>
-                   {transactions.length > 0 ? (
-                        <Values>
-                            {transactions.map(transaction => {
-                                const {date, description, value, type} = transaction;
-                                const number = parseFloat(value).toFixed(2).replace('.', ',');
-                                type === 'input' ? sum += parseFloat(value) : sum -= parseFloat(value);
+                {transactions.length > 0 ? (
+                    <Values>
+                        {transactions.map(transaction => {
+                            const {date, description, value, type} = transaction;
+                            const number = parseFloat(value).toFixed(2).replace('.', ',');
+                            type === 'input' ? sum += parseFloat(value) : sum -= parseFloat(value);
 
-                                return (
-                                    <List>
-                                        <Group>
-                                            <Info1>{date}</Info1>
-                                            <Info2>{description}</Info2>
-                                        </Group>
+                            return (
+                                <List>
+                                    <Group>
+                                        <Info1>{date}</Info1>
+                                        <Info2>{description}</Info2>
+                                    </Group>
+                                    <Group>
                                         <Value color={type === 'input' ? '#03AC00' : '#C70000'}>{number}</Value>
-                                    </List>
-                                )
-                            })}
-                            <Balance>
-                                SALDO
-                                <Value color={sum > 0 ? '#03AC00' : '#C70000'}>{parseFloat(sum).toFixed(2).replace('.', ',')}</Value> 
-                            </Balance>
-                        </Values>
-                   ) : (
-                       <Div><H2>Não há registros de entrada ou saída</H2></Div>
-                   )}
+                                        <Button onClick={() => exclude(transaction)}>x</Button>
+                                    </Group>
+                                </List>
+                            );
+                        })}
+                        <Balance>
+                            SALDO
+                            <Value color={sum > 0 ? '#03AC00' : '#C70000'}>{parseFloat(sum).toFixed(2).replace('.', ',')}</Value> 
+                        </Balance>
+                    </Values>
+                ) : (
+                   <Div><H2>Não há registros de entrada ou saída</H2></Div>
+                )}
             </Registers>
 
             <Footer>
@@ -225,6 +242,17 @@ const Balance = styled.h1`
     display: flex;
     position: absolute;
     justify-content: space-between;
+`;
+
+const Button = styled.div`
+    margin-left: 10px;
+    color: #C6C6C6;
+    font-family: 'Raleway';
+
+    :hover {
+        color: #000000;
+        cursor: pointer;
+    }
 `;
 
 const Loading = styled.div`
