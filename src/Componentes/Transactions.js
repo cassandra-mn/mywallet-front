@@ -48,7 +48,6 @@ export default function Transactions() {
 
     async function update(transaction) {
         try {
-            console.log(transaction);
             if (transaction.type === 'input') navigate(`/transactions/edit-input/${transaction._id}`);
             else navigate(`/transactions/edit-output/${transaction._id}`);
         } catch(e) {
