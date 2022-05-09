@@ -1,3 +1,4 @@
+import {BallTriangle} from 'react-loader-spinner';
 import {useNavigate} from 'react-router-dom';
 import {useContext, useEffect} from 'react';
 import {FaSignOutAlt} from 'react-icons/fa';
@@ -52,10 +53,10 @@ export default function Transactions() {
                                     </List>
                                 )
                             })}
-                            <Saldo>
+                            <Balance>
                                 SALDO
                                 <Value color={sum > 0 ? '#03AC00' : '#C70000'}>{parseFloat(sum).toFixed(2).replace('.', ',')}</Value> 
-                            </Saldo>
+                            </Balance>
                         </Values>
                    ) : (
                        <Div><H2>Não há registros de entrada ou saída</H2></Div>
@@ -73,7 +74,7 @@ export default function Transactions() {
                 </Transaction>
             </Footer>
         </Container>
-    ) : <p>Carregando</p>;
+    ) : <Loading><BallTriangle color='#FFFFFF'/></Loading>;
 }
 
 const Container = styled.div`
@@ -214,7 +215,7 @@ const Value = styled.p`
     color: ${props => props.color};
 `;
 
-const Saldo = styled.h1`
+const Balance = styled.h1`
     width: calc(100% - 35px);
     bottom: 20px;
     font-size: 17px;
@@ -224,4 +225,12 @@ const Saldo = styled.h1`
     display: flex;
     position: absolute;
     justify-content: space-between;
+`;
+
+const Loading = styled.div`
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
