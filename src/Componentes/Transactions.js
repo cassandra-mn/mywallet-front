@@ -17,10 +17,7 @@ export default function Transactions() {
     useEffect(() => {
         (async () => {
             try {
-                const transactions = await axios.get('http://localhost:5000/transactions', {
-                    headers: {Authorization: `Bearer ${user.token}`}
-                });
-                setTransactions(transactions.data);
+                getData();
             } catch(e) {
                 alert('Erro ao obter transações');
                 console.log(e);
@@ -28,17 +25,35 @@ export default function Transactions() {
         })();
     }, []);
 
+    async function getData() {
+        const transactions = await axios.get('http://localhost:5000/transactions', {
+            headers: {Authorization: `Bearer ${user.token}`}
+        });
+        setTransactions(transactions.data);
+    }
+
     async function exclude(transaction) {
-        console.log('Deletando ', transaction._id);
-        
         try {
             const confirm = window.confirm('Tem certeza que deseja apagar essa transação?');
-            return confirm ? (
+            if (confirm) {
                 await axios.delete(`http://localhost:5000/transactions/${transaction._id}`, {
-                headers: {Authorization: `Bearer ${user.token}`}
-            })) : '';
+                    headers: {Authorization: `Bearer ${user.token}`}
+                });
+                getData();
+            }
         } catch(e) {
             alert(e.response.data);
+        }
+    }
+
+    async function update(transaction) {
+        try {
+            console.log(transaction);
+            if (transaction.type === 'input') navigate(`/transactions/edit-input/${transaction._id}`);
+            else navigate(`/transactions/edit-output/${transaction._id}`);
+        } catch(e) {
+            alert('Erro');
+            console.log(e);
         }
     }
 
@@ -61,7 +76,7 @@ export default function Transactions() {
                                 <List>
                                     <Group>
                                         <Info1>{date}</Info1>
-                                        <Info2>{description}</Info2>
+                                        <Info2 onClick={() => update(transaction)}>{description}</Info2>
                                     </Group>
                                     <Group>
                                         <Value color={type === 'input' ? '#03AC00' : '#C70000'}>{number}</Value>
@@ -225,6 +240,10 @@ const Info1 = styled.p`
 
 const Info2 = styled.p`
     color: #000000;
+
+    :hover {
+        cursor: pointer;
+    }
 `;
 
 const Value = styled.p`
